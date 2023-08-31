@@ -9,6 +9,7 @@ class Item:
     pay_rate = 1.0
     all = []
 
+
     def __init__(self, name: str, price: float, quantity: int) -> None:
         """
         Создание экземпляра класса item.
@@ -22,18 +23,21 @@ class Item:
         self.quantity = quantity
         Item.all.append(self)
 
+
     @property
     def name(self):
         return self.__name
 
+
     @name.setter
     def name(self, value):
         """
-        Проверяет, что длина наименования товара не больше 10 симвовов. В противном случае, обрезает строку (оставляет первые 10 символов)
+        Проверяет, что длина наименования товара не больше 10 символов. В противном случае, обрезает строку (оставляет первые 10 символов)
         """
         if len(value) > 10:
             value = value[:10]
         self.__name = value
+
 
     @classmethod
     def instantiate_from_csv(cls):
@@ -41,7 +45,7 @@ class Item:
         Класс-метод, инициализирующий экземпляры класса `Item` данными из файла _src/items.csv_
         """
         cls.all = []
-        with open(r"C:\Users\Lena\PycharmProjects\electronics-shop-project\src\items.csv", newline='') as csvfile:
+        with open(r'C:\Users\Lena\PycharmProjects\electronics-shop-project\src\items.csv', newline='') as csvfile:
             reader = csv.DictReader(csvfile)
             for row in reader:
                 read_name = row['name']
@@ -67,8 +71,21 @@ class Item:
         """
         return self.price * self.quantity
 
+
     def apply_discount(self) -> None:
         """
         Применяет установленную скидку для конкретного товара.
         """
         self.price *= Item.pay_rate
+
+
+    def __repr__(self):
+        """
+        Магический метод для текстового образа объекта класса
+        """
+        return f"{self.__class__.__name__}('{self.name}', {self.price}, {self.quantity})"
+
+
+    def __str__(self):
+        return f'{self.name}'
+
