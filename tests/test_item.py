@@ -1,5 +1,6 @@
 import pytest
 from src.item import Item
+from src.phone import Phone
 
 
 @pytest.fixture()
@@ -7,14 +8,14 @@ def item():
     """
     Тестирует создание класса item
     """
-    return Item('apple', 100, 1000)
+    return Item('Notebook', 100000, 100)
 
 
 def test_calculate_total_price(item):
     """
     Тестирует расчет общей стоимости конкретного товара в магазине
     """
-    assert item.calculate_total_price() == 100000
+    assert item.calculate_total_price() == 10000000
 
 
 def test_apply_discount(item):
@@ -28,15 +29,15 @@ def test_item_initialized(item):
     """
     Тестирует создание экземпляров класса item
     """
-    assert item.name == "apple"
-    assert item.price == 100
-    assert item.quantity == 1000
+    assert item.name == "Notebook"
+    assert item.price == 100000
+    assert item.quantity == 100
 
 
 def test_name_setter(item):
     """Тестируем name.setter"""
-    item.name = 'Холодильник'
-    assert item.name == 'Холодильни'
+    item.name = 'Refrigerator'
+    assert item.name == 'Refrigerat'
 
 
 def test_string_to_number():
@@ -55,14 +56,28 @@ def test_instantiate_from_csv():
     Item.instantiate_from_csv()
     assert len(Item.all) == 5
 
+
 def test_repr(item):
     """
     Тестирует метод repr
     """
-    assert item.__repr__() == "Item('apple', 100, 1000)"
+    assert item.__repr__() == "Item('Notebook', 100000, 100)"
+
 
 def test_str(item) :
     """
     Тестирует метод str
     """
-    assert item.__str__() == 'apple'
+    assert item.__str__() == 'Notebook'
+
+
+def test_add(item):
+    """
+    Тестирует метод сложения экземпляров классов
+    """
+    item1 = Item('Notebook', 100000, 100)
+    phone1 = Phone('iPhone 15', 150000, 200, 2)
+    assert item1 + phone1 == 300
+    assert phone1 + phone1 == 400
+
+
