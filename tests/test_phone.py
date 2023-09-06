@@ -9,18 +9,23 @@ def phone():
     """
     return Phone('iPhone 15', 150000, 200, 2)
 
+
 def test_repr(phone):
     """
     Тестирует метод repr
     """
     assert phone.__repr__() == "Phone('iPhone 15', 150000, 200, 2)"
 
+
 def test_number_of_sim(phone):
     """
-    Тестирует
+    Проверяет, чтобы кол-во сим-карт было целым, неотрицательным числом
     """
     phone = Phone('iPhone 15', 150000, 200, 2)
     assert phone.number_of_sim == 2
+    with pytest.raises(ValueError):
+        phone.number_of_sim = -1
+
 
 def test_number_of_sim_setter(phone):
     phone1 = Phone('iPhone 15Pro', 180000, 100, 0)
