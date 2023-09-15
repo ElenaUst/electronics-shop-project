@@ -1,6 +1,8 @@
 import pytest
 from src.item import Item
 from src.phone import Phone
+from src.item import InstantiateCSVError
+
 
 
 @pytest.fixture()
@@ -53,8 +55,15 @@ def test_instantiate_from_csv():
     """
     Тестирует Класс-метод, инициализирующий экземпляры класса `Item` данными из файла _src/items.csv_
     """
-    Item.instantiate_from_csv()
+    Item.instantiate_from_csv('..\src\items.csv')
     assert len(Item.all) == 5
+
+
+def test_instantiate_from_csv_errors():
+    with pytest.raises(FileNotFoundError):
+        Item.instantiate_from_csv('notfound_items.csv')
+    with pytest.raises(InstantiateCSVError):
+        Item.instantiate_from_csv('test_items.csv')
 
 
 def test_repr(item):
